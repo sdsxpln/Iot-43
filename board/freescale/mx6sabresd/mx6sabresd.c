@@ -962,6 +962,7 @@ int board_init(void)
 #ifdef CONFIG_POWER
 int power_init_board(void)
 {
+	#if 0
 	struct pmic *pfuze;
 	unsigned int reg;
 	int ret;
@@ -1041,13 +1042,14 @@ int power_init_board(void)
 		reg |= 0x40;
 		pmic_reg_write(pfuze, PFUZE100_SW1CCONF, reg);
 	}
-
+    #endif
 	return 0;
 }
 
 #elif defined(CONFIG_DM_PMIC_PFUZE100)
 int power_init_board(void)
 {
+	#if 0
 	struct udevice *dev;
 	unsigned int reg;
 	int ret;
@@ -1127,7 +1129,7 @@ int power_init_board(void)
 		reg |= 0x40;
 		pmic_reg_write(dev, PFUZE100_SW1CCONF, reg);
 	}
-
+	#endif
 	return 0;
 }
 #endif

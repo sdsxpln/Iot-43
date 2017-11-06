@@ -234,7 +234,7 @@ static int do_gpio(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 }
 
 U_BOOT_CMD(gpio, 4, 0, do_gpio,
-	   "query and control gpio pins",
+	   "xingyanl_query and control gpio pins",
 	   "<input|set|clear|toggle> <pin>\n"
 	   "    - input/set/clear/toggle the specified pin\n"
 	   "gpio status [-a] [<bank> | <pin>]  - show [all/claimed] GPIOs");
