@@ -240,6 +240,7 @@ int uclass_find_device_by_seq(enum uclass_id id, int seq_or_req_seq,
 	struct uclass *uc;
 	struct udevice *dev;
 	int ret;
+	debug("Add_byxingyanl_The uclass_id is %d:\n", id);
 
 	*devp = NULL;
 	debug("%s: %d %d\n", __func__, find_req_seq, seq_or_req_seq);

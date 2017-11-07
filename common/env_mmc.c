@@ -103,7 +103,7 @@ static const char *init_mmc_for_env(struct mmc *mmc)
 		return "!No MMC card found";
 
 	if (mmc_init(mmc))
-		return "!MMC init failed";
+		return "!MMC init failed******************xingyanl";
 
 	if (mmc_set_env_part(mmc))
 		return "!MMC partition switch failed";

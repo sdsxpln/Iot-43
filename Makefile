@@ -1195,6 +1195,9 @@ quiet_cmd_u-boot__ ?= LD      $@
       --start-group $(u-boot-main) --end-group                 \
       $(PLATFORM_LIBS) -Map u-boot.map
 
+#xingyanl
+      $(info $(cmd_u-boot__))
+
 quiet_cmd_smap = GEN     common/system_map.o
 cmd_smap = \
 	smap=`$(call SYSTEM_MAP,u-boot) | \

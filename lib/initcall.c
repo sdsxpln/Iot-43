@@ -29,6 +29,8 @@ int initcall_run_list(const init_fnc_t init_sequence[])
 		else
 			debug("\n");
 		ret = (*init_fnc_ptr)();
+		printf("initcall sequence %p successfull at call %p (success=%d)\n", init_sequence, 
+				(char *)*init_fnc_ptr - reloc_ofs, ret);
 		if (ret) {
 			printf("initcall sequence %p failed at call %p (err=%d)\n",
 			       init_sequence,

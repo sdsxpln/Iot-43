@@ -220,7 +220,7 @@ static int __abortboot(int bootdelay)
 #ifdef CONFIG_MENUPROMPT
 	printf(CONFIG_MENUPROMPT);
 #else
-	printf("Hit any key to stop autoboot: %2d ", bootdelay);
+	printf("Hit any key to stop autoboot:******xingyanl %2d ", bootdelay);
 #endif
 
 	/*
@@ -314,8 +314,8 @@ const char *bootdelay_process(void)
 #if !defined(CONFIG_FSL_FASTBOOT) && defined(is_boot_from_usb)
 	if (is_boot_from_usb()) {
 		disconnect_from_pc();
-		printf("Boot from USB for mfgtools\n");
-		bootdelay = 0;
+		printf("Boot from USB for mfgtools, set the bootdelay is 10\n");
+		bootdelay = 10;
 		set_default_env("Use default environment for \
 				 mfgtools\n");
 	} else {

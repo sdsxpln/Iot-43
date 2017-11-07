@@ -21,7 +21,7 @@ static int do_help(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 
 U_BOOT_CMD(
 	help,	CONFIG_SYS_MAXARGS,	1,	do_help,
-	"print command description/usage",
+	"print command description/usage_xingyanl***********************",
 	"\n"
 	"	- print brief description of all commands\n"
 	"help command ...\n"
