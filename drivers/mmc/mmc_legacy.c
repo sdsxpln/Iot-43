@@ -67,6 +67,7 @@ void mmc_do_preinit(void)
 
 void mmc_list_init(void)
 {
+	debug("%s: add by xingyanl \n", __func__);
 	INIT_LIST_HEAD(&mmc_devices);
 	cur_dev_num = 0;
 }

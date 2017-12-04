@@ -148,7 +148,7 @@ void fix_devices(void)
 int dm_init(void)
 {
 	int ret;
-
+	debug("%s:_enter add by xingyanl \n", __func__);
 	if (gd->dm_root) {
 		dm_warn("Virtual root driver already exists!\n");
 		return -EINVAL;
@@ -159,6 +159,7 @@ int dm_init(void)
 	fix_drivers();
 	fix_uclass();
 	fix_devices();
+	debug("%s:_fix add by xingyanl \n", __func__);
 #endif
 
 	ret = device_bind_by_name(NULL, false, &root_info, &DM_ROOT_NON_CONST);
@@ -168,9 +169,10 @@ int dm_init(void)
 	DM_ROOT_NON_CONST->of_offset = 0;
 #endif
 	ret = device_probe(DM_ROOT_NON_CONST);
+	debug("%s:_leave_probe add by xingyanl \n", __func__);
 	if (ret)
 		return ret;
-
+	debug("%s:_leave_end add by xingyanl \n", __func__);
 	return 0;
 }
 
@@ -185,13 +187,14 @@ int dm_uninit(void)
 int dm_scan_platdata(bool pre_reloc_only)
 {
 	int ret;
-
+	debug("%s:_enter add by xingyanl \n", __func__);
 	ret = lists_bind_drivers(DM_ROOT_NON_CONST, pre_reloc_only);
 	if (ret == -ENOENT) {
 		dm_warn("Some drivers were not found\n");
 		ret = 0;
 	}
 
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return ret;
 }
 
@@ -200,7 +203,7 @@ int dm_scan_fdt_node(struct udevice *parent, const void *blob, int offset,
 		     bool pre_reloc_only)
 {
 	int ret = 0, err;
-
+	debug("%s:_enter add by xingyanl \n", __func__);
 	for (offset = fdt_first_subnode(blob, offset);
 	     offset > 0;
 	     offset = fdt_next_subnode(blob, offset)) {
@@ -221,7 +224,7 @@ int dm_scan_fdt_node(struct udevice *parent, const void *blob, int offset,
 
 	if (ret)
 		dm_warn("Some drivers failed to bind\n");
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return ret;
 }
 
@@ -247,6 +250,7 @@ __weak int dm_scan_other(bool pre_reloc_only)
 
 int dm_init_and_scan(bool pre_reloc_only)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	int ret;
 
 	ret = dm_init();
@@ -269,9 +273,10 @@ int dm_init_and_scan(bool pre_reloc_only)
 	}
 
 	ret = dm_scan_other(pre_reloc_only);
+	debug("%s:_leave_other add by xingyanl \n", __func__);
 	if (ret)
 		return ret;
-
+	debug("%s:_leave_end add by xingyanl \n", __func__);
 	return 0;
 }
 

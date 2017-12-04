@@ -1,0 +1,12 @@
+if TARGET_MX6QSENSORGW
+
+config SYS_BOARD
+	default "mx6qsensorgw"
+
+config SYS_VENDOR
+	default "freescale"
+
+config SYS_CONFIG_NAME
+	default "mx6qsensorgw"
+
+endif

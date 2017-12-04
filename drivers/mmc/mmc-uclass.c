@@ -159,6 +159,7 @@ void mmc_do_preinit(void)
 #if !defined(CONFIG_SPL_BUILD) || defined(CONFIG_SPL_LIBCOMMON_SUPPORT)
 void print_mmc_devices(char separator)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct udevice *dev;
 	char *mmc_type;
 	bool first = true;
@@ -182,7 +183,7 @@ void print_mmc_devices(char separator)
 		if (mmc_type)
 			printf(" (%s)", mmc_type);
 	}
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	printf("\n");
 }
 

@@ -272,6 +272,8 @@ static int mxc_gpio_direction_input(struct udevice *dev, unsigned offset)
 static int mxc_gpio_direction_output(struct udevice *dev, unsigned offset,
 				       int value)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
+
 	struct mxc_bank_info *bank = dev_get_priv(dev);
 
 	/* Configure GPIO output value. */
@@ -279,6 +281,8 @@ static int mxc_gpio_direction_output(struct udevice *dev, unsigned offset,
 
 	/* Configure GPIO direction as output. */
 	mxc_gpio_bank_direction(bank->regs, offset, MXC_GPIO_DIRECTION_OUT);
+
+	debug("%s:_leave add by xingyanl \n", __func__);
 
 	return 0;
 }

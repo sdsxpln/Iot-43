@@ -335,7 +335,6 @@ uint32_t fdt_get_phandle(const void *fdt, int nodeoffset)
 {
 	const fdt32_t *php;
 	int len;
-
 	/* FIXME: This is a bit sub-optimal, since we potentially scan
 	 * over all the properties twice. */
 	php = fdt_getprop(fdt, nodeoffset, "phandle", &len);
@@ -344,7 +343,7 @@ uint32_t fdt_get_phandle(const void *fdt, int nodeoffset)
 		if (!php || (len != sizeof(*php)))
 			return 0;
 	}
-
+	
 	return fdt32_to_cpu(*php);
 }
 
@@ -504,7 +503,6 @@ int fdt_node_offset_by_prop_value(const void *fdt, int startoffset,
 int fdt_node_offset_by_phandle(const void *fdt, uint32_t phandle)
 {
 	int offset;
-
 	if ((phandle == 0) || (phandle == -1))
 		return -FDT_ERR_BADPHANDLE;
 
@@ -522,7 +520,6 @@ int fdt_node_offset_by_phandle(const void *fdt, uint32_t phandle)
 		if (fdt_get_phandle(fdt, offset) == phandle)
 			return offset;
 	}
-
 	return offset; /* error from fdt_next_node() */
 }
 
@@ -594,7 +591,6 @@ int fdt_stringlist_search(const void *fdt, int nodeoffset, const char *property,
 		list += length;
 		idx++;
 	}
-
 	return -FDT_ERR_NOTFOUND;
 }
 

@@ -92,6 +92,7 @@ int dm_gpio_lookup_name(const char *name, struct gpio_desc *desc)
 int gpio_lookup_name(const char *name, struct udevice **devp,
 		     unsigned int *offsetp, unsigned int *gpiop)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct gpio_desc desc;
 	int ret;
 
@@ -100,6 +101,9 @@ int gpio_lookup_name(const char *name, struct udevice **devp,
 	ret = dm_gpio_lookup_name(name, &desc);
 	if (ret)
 		return ret;
+	
+	debug("The desc.dev->name %s and the desc.dev->driver.name is %s add by xingyanl \n", desc.dev->name, desc.dev->driver->name);
+
 
 	if (devp)
 		*devp = desc.dev;
@@ -107,8 +111,10 @@ int gpio_lookup_name(const char *name, struct udevice **devp,
 		*offsetp = desc.offset;
 	if (gpiop) {
 		struct gpio_dev_priv *uc_priv = dev_get_uclass_priv(desc.dev);
+		debug("The bank_name is %s \n", uc_priv->bank_name); 
 
 		*gpiop = uc_priv->gpio_base + desc.offset;
+		debug("The gpio number is %d, add by xingyanl \n", *gpiop);
 	}
 
 	return 0;
@@ -145,6 +151,8 @@ static int gpio_find_and_xlate(struct gpio_desc *desc,
 
 int dm_gpio_request(struct gpio_desc *desc, const char *label)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
+
 	struct udevice *dev = desc->dev;
 	struct gpio_dev_priv *uc_priv;
 	char *str;
@@ -164,7 +172,8 @@ int dm_gpio_request(struct gpio_desc *desc, const char *label)
 		}
 	}
 	uc_priv->name[desc->offset] = str;
-
+	
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 }
 
@@ -197,6 +206,8 @@ static int dm_gpio_requestf(struct gpio_desc *desc, const char *fmt, ...)
  */
 int gpio_request(unsigned gpio, const char *label)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
+
 	struct gpio_desc desc;
 	int ret;
 
@@ -204,6 +215,7 @@ int gpio_request(unsigned gpio, const char *label)
 	if (ret)
 		return ret;
 
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return dm_gpio_request(&desc, label);
 }
 
@@ -325,6 +337,8 @@ int gpio_direction_input(unsigned gpio)
  */
 int gpio_direction_output(unsigned gpio, int value)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
+
 	struct gpio_desc desc;
 	int ret;
 
@@ -335,12 +349,15 @@ int gpio_direction_output(unsigned gpio, int value)
 	if (ret)
 		return ret;
 
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return gpio_get_ops(desc.dev)->direction_output(desc.dev,
 							desc.offset, value);
 }
 
 int dm_gpio_get_value(const struct gpio_desc *desc)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
+
 	int value;
 	int ret;
 
@@ -350,6 +367,7 @@ int dm_gpio_get_value(const struct gpio_desc *desc)
 
 	value = gpio_get_ops(desc->dev)->get_value(desc->dev, desc->offset);
 
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return desc->flags & GPIOD_ACTIVE_LOW ? !value : value;
 }
 

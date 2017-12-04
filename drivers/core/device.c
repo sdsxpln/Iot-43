@@ -32,6 +32,7 @@ static int device_bind_common(struct udevice *parent, const struct driver *drv,
 			      ulong driver_data, int of_offset,
 			      uint of_platdata_size, struct udevice **devp)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct udevice *dev;
 	struct uclass *uc;
 	int size, ret = 0;
@@ -167,7 +168,7 @@ static int device_bind_common(struct udevice *parent, const struct driver *drv,
 		*devp = dev;
 
 	dev->flags |= DM_FLAG_BOUND;
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 
 fail_uclass_post_bind:
@@ -233,6 +234,7 @@ int device_bind(struct udevice *parent, const struct driver *drv,
 int device_bind_by_name(struct udevice *parent, bool pre_reloc_only,
 			const struct driver_info *info, struct udevice **devp)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct driver *drv;
 	uint platdata_size = 0;
 
@@ -245,6 +247,7 @@ int device_bind_by_name(struct udevice *parent, bool pre_reloc_only,
 #if CONFIG_IS_ENABLED(OF_PLATDATA)
 	platdata_size = info->platdata_size;
 #endif
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return device_bind_common(parent, drv, info->name,
 			(void *)info->platdata, 0, -1, platdata_size, devp);
 }
@@ -252,7 +255,7 @@ int device_bind_by_name(struct udevice *parent, bool pre_reloc_only,
 static void *alloc_priv(int size, uint flags)
 {
 	void *priv;
-
+	debug("%s:_enter add by xingyanl \n", __func__);
 	if (flags & DM_FLAG_ALLOC_PRIV_DMA) {
 		priv = memalign(ARCH_DMA_MINALIGN, size);
 		if (priv)
@@ -261,11 +264,13 @@ static void *alloc_priv(int size, uint flags)
 		priv = calloc(1, size);
 	}
 
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return priv;
 }
 
 int device_probe(struct udevice *dev)
 {
+	debug("%s:_enter add by xingyanl%s \n", __func__, dev->driver->name);
 	const struct driver *drv;
 	int size = 0;
 	int ret;
@@ -273,10 +278,13 @@ int device_probe(struct udevice *dev)
 
 	if (!dev)
 		return -EINVAL;
-
+	debug("%s:_2 add by xingyanl \n", __func__);
+	
 	if (dev->flags & DM_FLAG_ACTIVATED)
 		return 0;
-
+	
+	debug("%s:_3 add by xingyanl \n", __func__);
+	
 	drv = dev->driver;
 	assert(drv);
 
@@ -335,7 +343,7 @@ int device_probe(struct udevice *dev)
 	dev->seq = seq;
 
 	dev->flags |= DM_FLAG_ACTIVATED;
-
+	debug("%s:_4 add by xingyanl \n", __func__);
 	/*
 	 * Process pinctrl for everything except the root device, and
 	 * continue regardless of the result of pinctrl. Don't process pinctrl
@@ -345,6 +353,7 @@ int device_probe(struct udevice *dev)
 	if (dev->parent && device_get_uclass_id(dev) != UCLASS_PINCTRL)
 		pinctrl_select_state(dev, "default");
 
+	debug("%s:_5 add by xingyanl \n", __func__);
 	ret = uclass_pre_probe_device(dev);
 	if (ret)
 		goto fail;
@@ -357,12 +366,14 @@ int device_probe(struct udevice *dev)
 
 	if (drv->ofdata_to_platdata && dev_of_offset(dev) >= 0) {
 		ret = drv->ofdata_to_platdata(dev);
+		debug("%s:_ofdata_to_platdata add by xingyanl \n", __func__);
 		if (ret)
 			goto fail;
 	}
 
 	if (drv->probe) {
 		ret = drv->probe(dev);
+		debug("%s:_probe add by xingyanl \n", __func__);
 		if (ret) {
 			dev->flags &= ~DM_FLAG_ACTIVATED;
 			goto fail;
@@ -375,7 +386,7 @@ int device_probe(struct udevice *dev)
 
 	if (dev->parent && device_get_uclass_id(dev) == UCLASS_PINCTRL)
 		pinctrl_select_state(dev, "default");
-
+	debug("%s:_leave_sucess add by xingyanl \n", __func__);
 	return 0;
 fail_uclass:
 	if (device_remove(dev)) {
@@ -387,7 +398,7 @@ fail:
 
 	dev->seq = -1;
 	device_free(dev);
-
+	debug("%s:_leave_1 add by xingyanl \n", __func__);
 	return ret;
 }
 
@@ -453,7 +464,8 @@ void *dev_get_parent_priv(struct udevice *dev)
 
 static int device_get_device_tail(struct udevice *dev, int ret,
 				  struct udevice **devp)
-{
+{	
+	debug("%s:_enter add by xingyanl \n", __func__);
 	if (ret)
 		return ret;
 
@@ -462,7 +474,7 @@ static int device_get_device_tail(struct udevice *dev, int ret,
 		return ret;
 
 	*devp = dev;
-
+	debug("%s: leave add by xingyanl \n", __func__);
 	return 0;
 }
 

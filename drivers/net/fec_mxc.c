@@ -1225,6 +1225,7 @@ static int fec_phy_init(struct fec_priv *priv, struct udevice *dev)
 
 static int fecmxc_probe(struct udevice *dev)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct eth_pdata *pdata = dev_get_platdata(dev);
 	struct fec_priv *priv = dev_get_priv(dev);
 	struct mii_dev *bus = NULL;
@@ -1243,7 +1244,9 @@ static int fecmxc_probe(struct udevice *dev)
 
 #ifdef CONFIG_FEC_MXC_MDIO_BASE
 	bus = fec_get_miibus((uint32_t)CONFIG_FEC_MXC_MDIO_BASE, dev->seq);
+	debug("%s:_2 add by xingyanl \n", __func__);
 #else
+	debug("%s:_3 add by xingyanl \n", __func__);
 	bus = fec_get_miibus((uint32_t)priv->eth, dev->seq);
 #endif
 	if (!bus)
@@ -1296,7 +1299,8 @@ static int fecmxc_remove(struct udevice *dev)
 }
 
 static int fecmxc_ofdata_to_platdata(struct udevice *dev)
-{
+{	
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct eth_pdata *pdata = dev_get_platdata(dev);
 	struct fec_priv *priv = dev_get_priv(dev);
 	const char *phy_mode;
@@ -1318,7 +1322,7 @@ static int fecmxc_ofdata_to_platdata(struct udevice *dev)
 	 * Need to get the reset-gpio and related properties from DT
 	 * and implemet the enet reset code on .probe call
 	 */
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 }
 

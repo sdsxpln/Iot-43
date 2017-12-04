@@ -35,7 +35,8 @@ int pinctrl_decode_pin_config(const void *blob, int node)
  * @return: 0 on success, or negative error code on failure
  */
 static int pinctrl_config_one(struct udevice *config)
-{
+{	
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct udevice *pctldev;
 	const struct pinctrl_ops *ops;
 
@@ -51,6 +52,7 @@ static int pinctrl_config_one(struct udevice *config)
 	}
 
 	ops = pinctrl_get_ops(pctldev);
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return ops->set_state(pctldev, config);
 }
 
@@ -71,6 +73,8 @@ static int pinctrl_select_state_full(struct udevice *dev, const char *statename)
 	int config_node;
 	struct udevice *config;
 	int state, size, i, ret;
+	
+	debug("%s:_enter add by xingyanl \n", __func__);
 
 	state = fdt_stringlist_search(fdt, node, "pinctrl-names", statename);
 	if (state < 0) {
@@ -108,7 +112,7 @@ static int pinctrl_select_state_full(struct udevice *dev, const char *statename)
 		if (ret)
 			return ret;
 	}
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 }
 
@@ -190,7 +194,7 @@ static int pinctrl_select_state_simple(struct udevice *dev)
 	struct udevice *pctldev;
 	struct pinctrl_ops *ops;
 	int ret;
-
+	debug("%s:_enter add by xingyanl \n", __func__);
 	/*
 	 * For simplicity, assume the first device of PINCTRL uclass
 	 * is the correct one.  This is most likely OK as there is
@@ -199,25 +203,27 @@ static int pinctrl_select_state_simple(struct udevice *dev)
 	ret = uclass_get_device(UCLASS_PINCTRL, 0, &pctldev);
 	if (ret)
 		return ret;
-
+	debug("%s:_get_device add by xingyanl \n", __func__);
+	
 	ops = pinctrl_get_ops(pctldev);
 	if (!ops->set_state_simple) {
 		dev_dbg(dev, "set_state_simple op missing\n");
 		return -ENOSYS;
 	}
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return ops->set_state_simple(pctldev, dev);
 }
 
 int pinctrl_select_state(struct udevice *dev, const char *statename)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	/*
 	 * Try full-implemented pinctrl first.
 	 * If it fails or is not implemented, try simple one.
 	 */
 	if (pinctrl_select_state_full(dev, statename))
 		return pinctrl_select_state_simple(dev);
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 }
 

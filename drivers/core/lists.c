@@ -51,6 +51,7 @@ struct uclass_driver *lists_uclass_lookup(enum uclass_id id)
 
 int lists_bind_drivers(struct udevice *parent, bool pre_reloc_only)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct driver_info *info =
 		ll_entry_start(struct driver_info, driver_info);
 	const int n_ents = ll_entry_count(struct driver_info, driver_info);
@@ -67,7 +68,7 @@ int lists_bind_drivers(struct udevice *parent, bool pre_reloc_only)
 				result = ret;
 		}
 	}
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return result;
 }
 
@@ -129,6 +130,7 @@ static int driver_check_compatible(const struct udevice_id *of_match,
 int lists_bind_fdt(struct udevice *parent, const void *blob, int offset,
 		   struct udevice **devp)
 {
+	dm_dbg("%s:_enter add by xingyanl \n", __func__);
 	struct driver *driver = ll_entry_start(struct driver, driver);
 	const int n_ents = ll_entry_count(struct driver, driver);
 	const struct udevice_id *id;
@@ -196,7 +198,7 @@ int lists_bind_fdt(struct udevice *parent, const void *blob, int offset,
 
 	if (!found && !result && ret != -ENODEV)
 		dm_dbg("No match for node '%s'\n", name);
-
+	dm_dbg("%s:_leave_end add by xingyanl \n", __func__);
 	return result;
 }
 #endif

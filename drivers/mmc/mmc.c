@@ -1787,7 +1787,8 @@ static int mmc_probe(bd_t *bis)
 }
 #elif defined(CONFIG_DM_MMC)
 static int mmc_probe(bd_t *bis)
-{
+{	
+	debug("%s:_1 add by xingyanl \n", __func__);
 	int ret, i;
 	struct uclass *uc;
 	struct udevice *dev;
@@ -1795,23 +1796,25 @@ static int mmc_probe(bd_t *bis)
 	ret = uclass_get(UCLASS_MMC, &uc);
 	if (ret)
 		return ret;
-
+	debug("%s:_2 add by xingyanl \n", __func__);
 	/*
 	 * Try to add them in sequence order. Really with driver model we
 	 * should allow holes, but the current MMC list does not allow that.
 	 * So if we request 0, 1, 3 we will get 0, 1, 2.
 	 */
 	for (i = 0; ; i++) {
+		debug("%s:_3 add by xingyanl \n", __func__);
 		ret = uclass_get_device_by_seq(UCLASS_MMC, i, &dev);
 		if (ret == -ENODEV)
 			break;
 	}
 	uclass_foreach_dev(dev, uc) {
+		debug("%s:_4 add by xingyanl \n", __func__);
 		ret = device_probe(dev);
 		if (ret)
 			printf("%s - probe failed: %d\n", dev->name, ret);
 	}
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 }
 #else
@@ -1826,6 +1829,7 @@ static int mmc_probe(bd_t *bis)
 
 int mmc_initialize(bd_t *bis)
 {
+	debug("%s: add by xingyanl \n", __func__);	
 	static int initialized = 0;
 	int ret;
 	if (initialized)	/* Avoid initializing mmc multiple times */

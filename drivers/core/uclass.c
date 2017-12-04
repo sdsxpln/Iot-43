@@ -49,6 +49,7 @@ struct uclass *uclass_find(enum uclass_id key)
  */
 static int uclass_add(enum uclass_id id, struct uclass **ucp)
 {
+	debug("%s: add by xingyanl \n", __func__);
 	struct uclass_driver *uc_drv;
 	struct uclass *uc;
 	int ret;
@@ -138,7 +139,7 @@ int uclass_destroy(struct uclass *uc)
 int uclass_get(enum uclass_id id, struct uclass **ucp)
 {
 	struct uclass *uc;
-
+	debug("%s: add by xingyanl \n", __func__);
 	*ucp = NULL;
 	uc = uclass_find(id);
 	if (!uc)
@@ -181,7 +182,8 @@ int uclass_find_device(enum uclass_id id, int index, struct udevice **devp)
 }
 
 int uclass_find_first_device(enum uclass_id id, struct udevice **devp)
-{
+{	
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct uclass *uc;
 	int ret;
 
@@ -193,7 +195,7 @@ int uclass_find_first_device(enum uclass_id id, struct udevice **devp)
 		return 0;
 
 	*devp = list_first_entry(&uc->dev_head, struct udevice, uclass_node);
-
+	debug("%s:_leave add by xingyanl %s\n", __func__, (*devp)->name);
 	return 0;
 }
 
@@ -237,10 +239,11 @@ int uclass_find_device_by_name(enum uclass_id id, const char *name,
 int uclass_find_device_by_seq(enum uclass_id id, int seq_or_req_seq,
 			      bool find_req_seq, struct udevice **devp)
 {
+	debug("%s:_1 add by xingyanl \n", __func__);
 	struct uclass *uc;
 	struct udevice *dev;
 	int ret;
-	debug("Add_byxingyanl_The uclass_id is %d:\n", id);
+	debug("The uclass_id is_by xingyanl %d:\n", id);
 
 	*devp = NULL;
 	debug("%s: %d %d\n", __func__, find_req_seq, seq_or_req_seq);
@@ -267,6 +270,7 @@ int uclass_find_device_by_seq(enum uclass_id id, int seq_or_req_seq,
 int uclass_find_device_by_of_offset(enum uclass_id id, int node,
 				    struct udevice **devp)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct uclass *uc;
 	struct udevice *dev;
 	int ret;
@@ -275,6 +279,7 @@ int uclass_find_device_by_of_offset(enum uclass_id id, int node,
 	if (node < 0)
 		return -ENODEV;
 	ret = uclass_get(id, &uc);
+	debug("%s:_leave_1 add by xingyanl \n", __func__);
 	if (ret)
 		return ret;
 
@@ -284,7 +289,7 @@ int uclass_find_device_by_of_offset(enum uclass_id id, int node,
 			return 0;
 		}
 	}
-
+	debug("%s:_leave_2 add by xingyanl \n", __func__);
 	return -ENODEV;
 }
 
@@ -327,6 +332,7 @@ int uclass_get_device_by_driver(enum uclass_id id,
 				const struct driver *find_drv,
 				struct udevice **devp)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct udevice *dev;
 	struct uclass *uc;
 	int ret;
@@ -339,7 +345,7 @@ int uclass_get_device_by_driver(enum uclass_id id,
 		if (dev->driver == find_drv)
 			return uclass_get_device_tail(dev, 0, devp);
 	}
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return -ENODEV;
 }
 
@@ -348,14 +354,14 @@ int uclass_get_device_tail(struct udevice *dev, int ret,
 {
 	if (ret)
 		return ret;
-
+	debug("%s:_enter add by xingyanl \n", __func__);
 	assert(dev);
 	ret = device_probe(dev);
 	if (ret)
 		return ret;
 
 	*devp = dev;
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 }
 
@@ -363,9 +369,10 @@ int uclass_get_device(enum uclass_id id, int index, struct udevice **devp)
 {
 	struct udevice *dev;
 	int ret;
-
+	debug("%s:_enter add by xingyanl \n", __func__);
 	*devp = NULL;
 	ret = uclass_find_device(id, index, &dev);
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return uclass_get_device_tail(dev, ret, devp);
 }
 
@@ -382,12 +389,14 @@ int uclass_get_device_by_name(enum uclass_id id, const char *name,
 
 int uclass_get_device_by_seq(enum uclass_id id, int seq, struct udevice **devp)
 {
+	debug("%s:_ add by xingyanl \n", __func__);
 	struct udevice *dev;
 	int ret;
 
 	*devp = NULL;
 	ret = uclass_find_device_by_seq(id, seq, false, &dev);
 	if (ret == -ENODEV) {
+		debug("%s:_2 add by xingyanl \n", __func__);
 		/*
 		 * We didn't find it in probed devices. See if there is one
 		 * that will request this seq if probed.
@@ -423,6 +432,7 @@ int uclass_get_device_by_phandle(enum uclass_id id, struct udevice *parent,
 
 int uclass_first_device(enum uclass_id id, struct udevice **devp)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct udevice *dev;
 	int ret;
 
@@ -430,6 +440,7 @@ int uclass_first_device(enum uclass_id id, struct udevice **devp)
 	ret = uclass_find_first_device(id, &dev);
 	if (!dev)
 		return 0;
+	debug("%s:_leave + *_tail add by xingyanl \n", __func__);
 	return uclass_get_device_tail(dev, ret, devp);
 }
 
@@ -460,6 +471,7 @@ int uclass_next_device(struct udevice **devp)
 
 int uclass_bind_device(struct udevice *dev)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct uclass *uc;
 	int ret;
 
@@ -475,7 +487,7 @@ int uclass_bind_device(struct udevice *dev)
 				goto err;
 		}
 	}
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 err:
 	/* There is no need to undo the parent's post_bind call */
@@ -504,6 +516,7 @@ int uclass_unbind_device(struct udevice *dev)
 
 int uclass_resolve_seq(struct udevice *dev)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct udevice *dup;
 	int seq;
 	int ret;
@@ -530,11 +543,13 @@ int uclass_resolve_seq(struct udevice *dev)
 		if (ret)
 			return ret;
 	}
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return seq;
 }
 
 int uclass_pre_probe_device(struct udevice *dev)
 {
+	debug("%s:_enter add by xingyanl \n", __func__);
 	struct uclass_driver *uc_drv;
 	int ret;
 
@@ -551,16 +566,19 @@ int uclass_pre_probe_device(struct udevice *dev)
 	if (uc_drv->child_pre_probe)
 		return uc_drv->child_pre_probe(dev);
 
+	debug("%s:_leave add by xingyanl \n", __func__);
+	
 	return 0;
 }
 
 int uclass_post_probe_device(struct udevice *dev)
 {
 	struct uclass_driver *uc_drv = dev->uclass->uc_drv;
+	debug("%s:_enter add by xingyanl \n", __func__);
 
 	if (uc_drv->post_probe)
 		return uc_drv->post_probe(dev);
-
+	debug("%s:_leave add by xingyanl \n", __func__);
 	return 0;
 }
 
