@@ -214,6 +214,7 @@ int dm_scan_fdt_node(struct udevice *parent, const void *blob, int offset,
 			dm_dbg("   - ignoring disabled device\n");
 			continue;
 		}
+		debug("The fdtname is_add_xingyanl %s: \n", fdt_get_name(blob, offset, NULL));
 		err = lists_bind_fdt(parent, blob, offset, NULL);
 		if (err && !ret) {
 			ret = err;
